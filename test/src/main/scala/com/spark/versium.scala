@@ -96,10 +96,21 @@ object versium {
      
     //Gr.edges.collect.foreach(println(_
   
-  val cc= Gr.connectedComponents.vertices
-  val ttr = recordNodes.join(cc)
+  val cc= Gr.connectedComponents()
+  
+  
+  val pg=Gr.pageRank(.00001).vertices
+  
+  println("pg" + pg);
+     
+     
+     println("CC: "+cc.triangleCount())
+//  val ttr = recordNodes.join(cc).map{
        
-     println(ttr.collect().mkString("\n"))
+  //     case (id, (nodename, cc ) )=> (nodename, cc)
+   //  }
+       
+    // println(ttr.collect().mkString("\n"))
    
    
    }
