@@ -32,12 +32,28 @@ object tweet {
      
      
      
-     val graph : Graph[String, String]= Graph.fromEdges(edges,"Property")
+     val graph : Graph[String , String]= Graph.fromEdges(edges,"Property")
      
      println("Num vertices = "+graph.numVertices)
      println("Num Edges = "+graph.numEdges)
      
+     val fact:RDD[String] =graph.triplets.map(trip=> trip.srcId +" is a friend of "+ trip.dstId)  // to find a friend
+     
+     //println(fact.foreach(println(_)))
      
      
+     val g_indeg= graph.outDegrees
+     
+     val maxInDeg= g_indeg.sortBy(_._2, false).take(10)
+     
+    maxInDeg.foreach(println(_))
+     
+    
+    
+    val pggraph=graph.pageRank(0.01)
+    
+    val top10= pggraph.vertices.top(10)(Ordering.by { pageRank => pageRank._2 })
+    
+    top10.foreach(println(_))
   }
 }
